@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const Pool = require('pg').Pool;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -32,6 +33,48 @@ app.post('/api/users/sign-up', async (req, res) => {
     catch (err) {
         console.error(err);
         res.status(500).send("Server error");
+    }
+});
+
+app.post('/api/users/login', async (req, res) => {
+    const {identifier, password} = req.body;
+
+    try {
+        const userID = await pool.query(
+            "SELECT * FROM users WHERE user_name = $1 OR email = $1",
+            [identifier]
+        );
+        
+        if (userID.rows.length == 0) {
+            return res.status(401).send("Invalid credentials");
+        }
+
+        const user = userID.rows[0];
+
+        const passMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passMatch) {
+            return res.status(401).send("Invalid credentials");
+        }
+
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+
+        const token = jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'}
+        );
+
+        res.json({token});
+
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
     }
 });
 
