@@ -3,6 +3,7 @@ const express = require('express');
 const Pool = require('pg').Pool;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const auth = require('./middleware/auth')
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -76,6 +77,10 @@ app.post('/api/users/login', async (req, res) => {
         console.error(err);
         res.status(500).send("Server Error");
     }
+});
+
+app.get('/api/authentication', auth, (req, res) => {
+    res.send(`Welcome user ${req.user.id}!`)
 });
 
 app.get('/testdb', async (req, res) => {
