@@ -1,4 +1,4 @@
 function RegisterPage() {
-    return <div>Sign-Up</div>;
+    return <div>Register Page</div>;
 }
 export default RegisterPage;
