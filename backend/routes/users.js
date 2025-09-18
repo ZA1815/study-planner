@@ -5,14 +5,14 @@ const jwt = require('jsonwebtoken');
 const pool = require('../db/db');
 
 router.post('/sign-up', async (req, res) => {
-    const {user_name, email, password} = req.body;
+    const {username, email, password} = req.body;
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
     try {
         const newUser = await pool.query(
             'INSERT INTO users (user_name, email, password_hash) VALUES ($1, $2, $3) RETURNING *',
-            [user_name, email, passwordHash]
+            [username, email, passwordHash]
         );
         res.status(201).json(newUser.rows[0]);
     }
