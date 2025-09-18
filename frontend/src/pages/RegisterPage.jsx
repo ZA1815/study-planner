@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 function RegisterPage() {
     const [userInfo, setUserInfo] = useState({username: '', email: '', password: ''});
@@ -10,9 +11,21 @@ function RegisterPage() {
         });
     };
 
-    const onSubmitFunc = (e) => {
+    const onSubmitFunc = async (e) => {
         e.preventDefault();
-        console.log('Form submitted with:', userInfo);
+        
+        try {
+            const url = 'http://localhost:3001/api/users/sign-up';
+
+            const response = await axios.post(url, formData);
+            
+            console.log('Registration successful: ', response.data);
+            alert('Registration successful. Please log in.');
+        }
+        catch (err) {
+            console.error('There was an error registering,', err.response.data);
+            alert('Registration failed: ', err.response.data.msg);
+        }
     }
 
     return (
