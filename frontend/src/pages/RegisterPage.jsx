@@ -31,7 +31,7 @@ function RegisterPage() {
                     <label>Password: </label>
                     <input type="password" name="password" value={userInfo.password} onChange={onChangeFunc} required />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Sign-up</button>
             </form>
         </div>
     )
