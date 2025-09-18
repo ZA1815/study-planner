@@ -17,7 +17,7 @@ function RegisterPage() {
         try {
             const url = 'http://localhost:3001/api/users/sign-up';
 
-            const response = await axios.post(url, formData);
+            const response = await axios.post(url, userInfo);
             
             console.log('Registration successful: ', response.data);
             alert('Registration successful. Please log in.');
