@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const pool = require('./db/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const auth = require('./middleware/auth');
 const app = express();
+app.use(cors());
 app.use(express.json());
 const PORT = 3001;
 
