@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import AddCourseForm from '../components/AddCourseForm';
+import CourseItem from '../components/CourseItem'
 
 function Dashboard() {
     const [courses, setCourses] = useState([]);
@@ -54,15 +55,15 @@ function Dashboard() {
             {error && <p style={{color: 'red'}}>{error}</p>}
 
             {!isLoading && !error && (
-                <ul>
+                <>
                     {courses.length > 0 ? (
                         courses.map((course) => (
-                            <li key={course.id}>{course.name}</li>
+                            <CourseItem key={course.id} course={course} />
                         ))
                     ) : (
                         <p>You haven't added any courses yet.</p>
                     )}
-                </ul>
+                </>
             )}
             <div>
                 <AddCourseForm onCourseAdded={onCourseAddedFunc}/>
