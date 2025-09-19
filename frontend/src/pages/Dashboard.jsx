@@ -66,7 +66,7 @@ function Dashboard() {
                 </>
             )}
             <div>
-                <AddCourseForm onCourseAdded={onCourseAddedFunc}/>
+                <AddCourseForm onCourseAdded={onCourseAddedFunc} />
             </div>
         </div>
     );

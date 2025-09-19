@@ -2,6 +2,7 @@ import {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import AddAssignmentForm from './AddAssignmentForm';
 
 function CourseItem({course}) {
     const [assignments, setAssignments] = useState([]);
@@ -41,6 +42,10 @@ function CourseItem({course}) {
         }
     }, [course.id, token, nav]);
 
+    const onAssignmentAddedFunc = (assignment) => {
+        setAssignments([...assignments, assignment]);
+    }
+
     return (
         <div>
             <h3>Course: {course.name}</h3>
@@ -52,13 +57,20 @@ function CourseItem({course}) {
                 <ul>
                     {assignments.length > 0 ? (
                         assignments.map((assignment) => (
-                            <li key={assignment.id}>{assignment.name}</li>
+                            <li key={assignment.id}>
+                                {assignment.name}
+                                {assignment.due_date ? ` | Due On: ${new Date(assignment.due_date).toLocaleDateString()}`
+                                : ''}
+                            </li>
                         ))
                     ) : (
                         <p>You haven't added any assignments yet.</p>
                     )}
                 </ul>
             )}
+            <div>
+                <AddAssignmentForm onAssignmentAdded={onAssignmentAddedFunc} course={course}/>
+            </div>
         </div>
     );
 }
