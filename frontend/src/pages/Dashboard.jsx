@@ -2,6 +2,7 @@ import { useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import AddCourseForm from '../components/AddCourseForm';
 
 function Dashboard() {
     const [courses, setCourses] = useState([]);
@@ -41,6 +42,10 @@ function Dashboard() {
         }
     }, [token, nav]);
 
+    const onCourseAddedFunc = (course) => {
+        setCourses([...courses, course]);
+    }
+
     return(
         <div>
             <h2>Courses:</h2>
@@ -59,6 +64,9 @@ function Dashboard() {
                     )}
                 </ul>
             )}
+            <div>
+                <AddCourseForm onCourseAdded={onCourseAddedFunc}/>
+            </div>
         </div>
     );
 }
