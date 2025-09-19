@@ -47,7 +47,11 @@ function Dashboard() {
         setCourses([...courses, course]);
     }
 
-    return(
+    const onCourseDeletedFunc = (deleteID) => {
+        setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
+    }
+
+    return (
         <div>
             <h2>Courses:</h2>
             {isLoading && <p>Loading courses...</p>}
@@ -58,7 +62,7 @@ function Dashboard() {
                 <>
                     {courses.length > 0 ? (
                         courses.map((course) => (
-                            <CourseItem key={course.id} course={course} />
+                            <CourseItem key={course.id} course={course} onDelete={onCourseDeletedFunc}/>
                         ))
                     ) : (
                         <p>You haven't added any courses yet.</p>
