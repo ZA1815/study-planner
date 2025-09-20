@@ -33,15 +33,8 @@ function Dashboard() {
                 setIsLoading(false);
             }
         }
-
-        if (token) {
-            fetchCourses();
-        }
-        else {
-            setIsLoading(false);
-            nav('/login');
-        }
-    }, [token, nav]);
+        fetchCourses();
+    }, [token]);
 
     const onCourseAddedFunc = (course) => {
         setCourses([...courses, course]);
