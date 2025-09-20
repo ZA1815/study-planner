@@ -24,6 +24,10 @@ app.use('/api/courses', require('./routes/courses'));
 
 app.use('/api/courses/:courseID/assignments', require('./routes/assignments'));
 
+app.use('/api/assignments', require('./routes/assignments'));
+
+app.use('/api/youtube', require('./routes/youtube'));   
+
 app.listen(PORT, () => {
     console.log(`Server is running and listening on http://localhost:${PORT}`);
 });

@@ -124,4 +124,21 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+router.get('/all', auth, async (req, res) => {
+    const userID = req.user.id;
+
+    try {
+        const assignments = await pool.query(
+            'SELECT a.id, a.name, a.due_date, c.name AS course_name FROM assignments a JOIN courses c ON a.course_id = c.id WHERE c.user_id = $1 ORDER BY a.due_date ASC',
+            [userID]
+        );
+
+        res.status(200).json(assignments.rows);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;
