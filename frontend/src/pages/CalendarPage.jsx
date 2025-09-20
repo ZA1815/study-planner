@@ -44,7 +44,7 @@ function CalendarPage() {
     return (
         <div>
             <h2 className="text-2xl font-bold mb-4">Assignment Calendar</h2>
-            <div style={{height: 500}}>
+            <div style={{height: 1100}}>
                 <Calendar localizer={localizer} events={assignments} startAccessor="start" endAccessor="end" />
             </div>
         </div>
