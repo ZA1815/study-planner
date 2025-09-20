@@ -18,7 +18,7 @@ function Navbar () {
                 <Link to="/">
                 <h1 className="text-2xl font-bold">Study Planner</h1>
                 </Link>
-                {token && <Link className="py-2 px-4 rounded hover:bg-blue-600" to="/calendar">Calendar</Link>}
+                {token && <Link className="font-bold py-2 px-4 rounded hover:bg-blue-600" to="/calendar">Calendar</Link>}
             </div>
             <div>
                 {token ? 
