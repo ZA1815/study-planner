@@ -47,8 +47,25 @@ function Dashboard() {
         setCourses([...courses, course]);
     }
 
-    const onCourseDeletedFunc = (deleteID) => {
-        setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
+    const onCourseDeletedFunc = async (deleteID) => {
+        try {
+            const url = `http://localhost:3001/api/courses/${deleteID}`;
+            const config = {
+                headers: {
+                    'x-auth-token': token
+                }
+            }
+
+            const response = await axios.delete(url, config);
+            setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
+        }
+        catch (err) {
+            setError(err.response ? err.response.data.msg : 'Unknown error')
+        }
+    }
+
+    const onCourseEditedFunc = (updatedCourse) => {
+        setCourses(currentCourses => currentCourses.map(course => course.id === updatedCourse.id ? updatedCourse : course));
     }
 
     return (
@@ -62,7 +79,7 @@ function Dashboard() {
                 <>
                     {courses.length > 0 ? (
                         courses.map((course) => (
-                            <CourseItem key={course.id} course={course} onDelete={onCourseDeletedFunc}/>
+                            <CourseItem key={course.id} course={course} onDelete={onCourseDeletedFunc} onEdit={onCourseEditedFunc}/>
                         ))
                     ) : (
                         <p>You haven't added any courses yet.</p>

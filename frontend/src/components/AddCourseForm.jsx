@@ -32,7 +32,6 @@ function AddCourseForm({ onCourseAdded }) {
 
             setCourseName('');
             console.log('Course created successfully: ', response.data);
-            alert('Course created successfully.');
         }
         catch (err) {
             console.error('Error creating course: ', err.response.data);

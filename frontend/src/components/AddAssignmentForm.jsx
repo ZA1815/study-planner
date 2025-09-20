@@ -23,7 +23,11 @@ function AddAssignmentForm({ onAssignmentAdded, course }) {
                     'x-auth-token': token
                 }
             }
-            const response = await axios.post(url, assignmentData, config);
+            const payload = {
+                ...assignmentData,
+                dueDate: assignmentData.dueDate || null
+            };
+            const response = await axios.post(url, payload, config);
 
             onAssignmentAdded(response.data);
 
