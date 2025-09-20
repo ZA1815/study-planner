@@ -40,14 +40,14 @@ function AddCourseForm({ onCourseAdded }) {
     };
 
     return (
-        <div>
-            <h2>Add Course Form:</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 className="text-xl font-bold">Add Course Form:</h2>
             <form onSubmit={onSubmitFunc}>
                 <div>
-                    <label>Name:</label>
-                    <input type="text" placeholder="Calculus I" name="courseName" value={courseName} onChange={onChangeFunc} required />
+                    <label className="font-bold">Course Name:</label>
+                    <input className="mb-4 block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="Calculus I" name="courseName" value={courseName} onChange={onChangeFunc} required />
                 </div>
-                <button type="submit">Create Course</button>
+                <button className="py-2 px-4 rounded bg-blue-300 hover:bg-blue-400" type="submit">Create Course</button>
             </form>
         </div>
     );

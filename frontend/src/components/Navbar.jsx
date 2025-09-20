@@ -1,20 +1,28 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Navbar () {
     const {token} = useContext(AuthContext);
+    const nav = useNavigate();
+
+    const onLogoutClick = () => {
+        nav('/login');
+    }
 
     return(
-        <nav>
-            <Link to="/"><h1>Study Planner</h1></Link>
+        <nav className="bg-stone-950 text-stone-50 shadow-md p-4 flex justify-between items-center">
+            <Link to="/">
+            <h1 className="text-2xl font-bold">Study Planner</h1>
+            </Link>
             <div>
-                {token ? (<button>Logout</button>)
+                {token ? (<button onClick={onLogoutClick} className="font-bold py-2 px-4 rounded hover:bg-red-700">Logout</button>)
                 : 
-                (<>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Sign-up</Link>
-                </>)}
+                (<div className="space-x-4">
+                <Link className="py-2 px-4 rounded hover:bg-blue-600" to="/register">Sign-up</Link>
+                <Link className="py-2 px-4 rounded hover:bg-blue-600" to="/login">Login</Link>
+                </div>)}
             </div>
         </nav>
     );

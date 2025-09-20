@@ -70,7 +70,7 @@ function Dashboard() {
 
     return (
         <div>
-            <h2>Courses:</h2>
+            <h2 className="text-2xl font-bold text-stone-600 mb-4">Courses:</h2>
             {isLoading && <p>Loading courses...</p>}
 
             {error && <p style={{color: 'red'}}>{error}</p>}

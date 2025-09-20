@@ -44,17 +44,17 @@ function AddAssignmentForm({ onAssignmentAdded, course }) {
 
     return (
         <div>
-            <h2>Add Assignment Form:</h2>
+            <h2 className="text-xl font-bold">Add Assignment Form:</h2>
             <form onSubmit={onSubmitFunc}>
                 <div>
-                    <label>Assignment Name:</label>
-                    <input type="text" placeholder="Sec. 6.1" name="name" value={assignmentData.name} onChange={onChangeFunc} required />
+                    <label className="font-bold">Assignment Name:</label>
+                    <input className="block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="Sec. 6.1" name="name" value={assignmentData.name} onChange={onChangeFunc} required />
                 </div>
                 <div>
-                    <label>Due Date:</label>
-                    <input type="datetime-local" name="dueDate" value={assignmentData.dueDate} onChange={onChangeFunc} />
+                    <label className="font-bold">Due Date:</label>
+                    <input className="mb-4 block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="datetime-local" name="dueDate" value={assignmentData.dueDate} onChange={onChangeFunc} />
                 </div>
-                <button type="submit">Add Assignment</button>
+                <button className="py-2 px-4 rounded bg-blue-300 hover:bg-blue-400" type="submit">Add Assignment</button>
             </form>
         </div>
     );
