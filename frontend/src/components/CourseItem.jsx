@@ -119,28 +119,32 @@ function CourseItem({course, onDelete, onEdit}) {
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 w-1/3">
                 {isEditing ? <input className="text-xl font-bold" type="text" placeholder="Edit here..." value={editText} onChange={onChangeFunc} required /> : <h3 className="text-xl font-bold">Course: {course.name}</h3>}
                 <button className="py-2 px-4 rounded bg-emerald-300 hover:bg-emerald-600" onClick={onEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
             
                 <button className="py-2 px-4 rounded bg-red-300 hover:bg-red-600" onClick={() => onDelete(course.id)}>Delete</button>
-                {isLoading && <p>Loading assignments...</p>}
-
-                {error && <p style={{color: 'red'}}>{error}</p>}
-
-                {!isLoading && !error && (
-                    <ul>
-                        {assignments.length > 0 ? (
-                            assignments.map((assignment) => (
-                                <AssignmentItem key={assignment.id} course={course} assignment={assignment} onDelete={onAssignmentDeletedFunc} onEdit={onAssignmentEditedFunc} />
-                        ))) : (
-                            <p>You haven't added any assignments yet.</p>
-                        )}
-                    </ul>
-                )}
             </div>
-            <div>
-                <AddAssignmentForm onAssignmentAdded={onAssignmentAddedFunc} course={course}/>
+
+            <div className="flex flex-col md:flex-row md:space-x-8">
+                <div className="flex-1">
+                    <h4 className="font-semibold mb-2">Assignments:</h4>
+                    {isLoading && <p>Loading assignments...</p>}
+                    {error && <p style={{color: 'red'}}>{error}</p>}
+                    {!isLoading && !error && (
+                        <ul>
+                            {assignments.length > 0 ? (
+                                assignments.map((assignment) => (
+                                    <AssignmentItem key={assignment.id} course={course} assignment={assignment} onDelete={onAssignmentDeletedFunc} onEdit={onAssignmentEditedFunc} />
+                            ))) : (
+                                <p>You haven't added any assignments yet.</p>
+                            )}
+                        </ul>
+                    )}
+                </div>
+                <div className="w-full md:w-1/3 mt-6 md:mt-0">
+                    <AddAssignmentForm onAssignmentAdded={onAssignmentAddedFunc} course={course}/>
+                </div>
             </div>
         </div>
     );
