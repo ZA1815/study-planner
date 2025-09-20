@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function Navbar () {
-    const {token} = useContext(AuthContext);
+    const {token, logout} = useContext(AuthContext);
     const nav = useNavigate();
 
     const onLogoutClick = () => {
+        logout();
         nav('/login');
     }
 

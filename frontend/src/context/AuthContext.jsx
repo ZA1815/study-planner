@@ -14,9 +14,19 @@ function AuthProvider({children}) {
         }
     }, [token]);
 
+    const login = (newToken) => {
+        setToken(newToken);
+    }
+
+    const logout = () => {
+        setToken(null);
+    }
+
     const contextValue = {
         token,
-        setToken
+        setToken,
+        login,
+        logout
     };
 
     return (

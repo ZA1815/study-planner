@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 function LoginPage() {
     const [userInfo, setUserInfo] = useState({identifier: '', password: ''});
 
-    const {setToken} = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
 
     const nav = useNavigate();
 
@@ -26,7 +26,7 @@ function LoginPage() {
             const response = await axios.post(url, userInfo);
             const genToken = response.data.token;
 
-            setToken(genToken);
+            login(genToken);
             alert('Login successful.');
             nav('/');
         }
