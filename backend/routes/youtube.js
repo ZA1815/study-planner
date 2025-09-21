@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 router.get('/search', auth, async (req, res) => {
     const {searchTerm} = req.query;
 
-    if (!query) {
+    if (!searchTerm) {
         return res.status(400).send('Search query is required.');
     }
 
