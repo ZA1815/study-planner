@@ -51,7 +51,7 @@ function YouTubeSearch({assignment}) {
 
     return (
         <>
-        <button className="bg-blue-500 text-white py-1 px-2 rounded tex-sm hover:bg-blue-600" onClick={openModal}>Find Resources</button>
+        <button className="bg-blue-500 text-white py-1 px-2 rounded tex-sm hover:bg-blue-600 ml-2" onClick={openModal}>Find Resources</button>
         <Modal title={`YouTube Resources for ${assignment.name}`} isOpen={isModalOpen} onClose={closeModal}>
             {isLoading ? (<p>Loading videos...</p>)
             : (
