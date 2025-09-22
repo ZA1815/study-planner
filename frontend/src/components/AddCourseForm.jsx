@@ -56,7 +56,7 @@ function AddCourseForm({ onCourseAdded }) {
     };
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="bg-white p-6 rounded-lg shadow-md mb-6 mt-4">
             <h2 className="text-xl font-bold">Add Course Form:</h2>
             <form onSubmit={onSubmitFunc}>
                 <div>
