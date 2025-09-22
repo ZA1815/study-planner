@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import AddCourseForm from '../components/AddCourseForm';
-import CourseItem from '../components/CourseItem'
+import CourseItem from '../components/CourseItem';
+import toast from 'react-hot-toast';
 
 function Dashboard() {
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [error, setError] = useState(null);
     const nav = useNavigate();
 
@@ -42,6 +44,9 @@ function Dashboard() {
 
     const onCourseDeletedFunc = async (deleteID) => {
         try {
+            setIsDeleting(true);
+            const deletingToast = toast.loading('Deleting course...');
+
             const url = `http://localhost:3001/api/courses/${deleteID}`;
             const config = {
                 headers: {
@@ -50,10 +55,13 @@ function Dashboard() {
             }
 
             const response = await axios.delete(url, config);
+
+            toast.success('Successfuly deleted course.', {id: deletingToast});
             setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
         }
         catch (err) {
-            setError(err.response ? err.response.data.msg : 'Unknown error')
+            setError(err.response ? err.response.data.msg : 'Unknown error');
+            toast.error('Error deleting course: ', {id: deletingToast});
         }
     }
 

@@ -4,12 +4,15 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import AddAssignmentForm from './AddAssignmentForm';
 import AssignmentItem from './AssignmentItem';
+import toast from 'react-hot-toast';
 
 function CourseItem({course, onDelete, onEdit}) {
     const [assignments, setAssignments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(course.name);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [error, setError] = useState(null);
     const nav = useNavigate();
 
@@ -51,6 +54,9 @@ function CourseItem({course, onDelete, onEdit}) {
 
     const onAssignmentDeletedFunc = async (deleteID) => {
         try {
+            setIsDeleting(true);
+            const deletingToast = toast.loading('Deleting assignment...');
+
             const url = `http://localhost:3001/api/courses/${course.id}/assignments/${deleteID}`;
             const config = {
                 headers: {
@@ -59,10 +65,15 @@ function CourseItem({course, onDelete, onEdit}) {
             }
 
             const response = await axios.delete(url, config);
+            toast.success('Successfully deleted assignment.', {id: deletingToast});
             setAssignments(currentAssignments => currentAssignments.filter(assignment => assignment.id !== deleteID));
         }
         catch (err) {
             setError(err.response ? err.response.data.msg : 'Unknown error');
+            toast.error('Error deleting assignment: ', {id: deletingToast});
+        }
+        finally {
+            setIsDeleting(false);
         }
     }
 
@@ -73,6 +84,9 @@ function CourseItem({course, onDelete, onEdit}) {
     const onEditClick = async () => {
         if (isEditing) {
             try {
+                setIsSaving(true);
+                const savingToast = toast.loading('Saving course...');
+
                 const url = `http://localhost:3001/api/courses/${course.id}`
                 const config = {
                     headers: {
@@ -85,6 +99,8 @@ function CourseItem({course, onDelete, onEdit}) {
 
                 const response = await axios.put(url, newName, config);
 
+                toast.success('Successfully changed course.', {id: savingToast});
+
                 onEdit(response.data.data);
                 setIsEditing(false);
             }
@@ -96,16 +112,19 @@ function CourseItem({course, onDelete, onEdit}) {
                     const msg = err.response.data.msg || 'An error occurred.';
 
                     if (status == 401) {
-                        alert('Your session has expired. Please log in again.');
+                        toast.error('Your session has expired. Please log in again.', {id: savingToast});
                         nav('/login');
                     }
                     else {
-                        alert(`Error: ${msg}`);
+                        toast.error(msg, {id: savingToast});
                     }
                 }
                 else {
-                    alert('Save failed, please check your network connection and try again.');
+                    toast.error('Save failed, please check your network connection and try again.', {id: savingToast});
                 }
+            }
+            finally {
+                setIsSaving(false);
             }
         }
         else {
@@ -121,9 +140,8 @@ function CourseItem({course, onDelete, onEdit}) {
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <div className="flex justify-between items-center mb-4 w-1/3">
                 {isEditing ? <input className="text-xl font-bold" type="text" placeholder="Edit here..." value={editText} onChange={onChangeFunc} required /> : <h3 className="text-xl font-bold">Course: {course.name}</h3>}
-                <button className="py-2 px-4 rounded bg-emerald-300 hover:bg-emerald-600" onClick={onEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
-            
-                <button className="py-2 px-4 rounded bg-red-300 hover:bg-red-600" onClick={() => onDelete(course.id)}>Delete</button>
+                <button className="py-2 px-4 rounded bg-emerald-300 hover:bg-emerald-600" onClick={onEditClick}>{isEditing ? isSaving ? 'Saving...' : 'Save' : 'Edit'}</button>
+                <button className="py-2 px-4 rounded bg-red-300 hover:bg-red-600" onClick={() => onDelete(course.id)} disabled={isDeleting}>{isDeleting ? 'Deleting...' : 'Delete'}</button>
             </div>
 
             <div className="flex flex-col md:flex-row md:space-x-8">
