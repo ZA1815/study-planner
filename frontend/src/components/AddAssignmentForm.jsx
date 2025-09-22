@@ -24,7 +24,7 @@ function AddAssignmentForm({ onAssignmentAdded, course }) {
         const submittingToast = toast.loading('Creating assignment...');
 
         try {
-            const url = `http://localhost:3001/api/courses/${course.id}/assignments`;
+            const url = `${import.meta.env.VITE_API_URL}/api/courses/${course.id}/assignments`;
             const config = {
                 headers: {
                     'x-auth-token': token

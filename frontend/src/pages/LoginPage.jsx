@@ -21,7 +21,7 @@ function LoginPage() {
         e.preventDefault();
         
         try {
-            const url = 'http://localhost:3001/api/users/login'
+            const url = `${import.meta.env.VITE_API_URL}/api/users/login`
 
             const response = await axios.post(url, userInfo);
             const genToken = response.data.token;

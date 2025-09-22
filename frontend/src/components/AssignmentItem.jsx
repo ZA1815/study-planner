@@ -27,7 +27,7 @@ function AssignmentItem({course, assignment, onDelete, onEdit}) {
                 setIsSaving(true);
                 const savingToast = toast.loading('Saving assignment...');
 
-                const url = `http://localhost:3001/api/courses/${course.id}/assignments/${assignment.id}`;
+                const url = `${import.meta.env.VITE_API_URL}/api/courses/${course.id}/assignments/${assignment.id}`;
                 const config = {
                     headers: {
                         'x-auth-token': token

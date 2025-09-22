@@ -18,7 +18,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const url = 'http://localhost:3001/api/courses';
+                const url = `${import.meta.env.VITE_API_URL}/api/courses`;
                 const config = {
                     headers: {
                         'x-auth-token': token
@@ -48,7 +48,7 @@ function Dashboard() {
                 setIsDeleting(true);
                 const deletingToast = toast.loading('Deleting course...');
 
-                const url = `http://localhost:3001/api/courses/${deleteID}`;
+                const url = `${import.meta.env.VITE_API_URL}/api/courses/${deleteID}`;
                 const config = {
                     headers: {
                         'x-auth-token': token

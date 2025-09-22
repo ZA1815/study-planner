@@ -19,7 +19,7 @@ function YouTubeSearch({assignment}) {
             setIsLoading(true);
             
             try {
-                const url = `http://localhost:3001/api/youtube/search?query=${encodeURIComponent(assignment.name)}`;
+                const url = `${import.meta.env.VITE_API_URL}/api/youtube/search?query=${encodeURIComponent(assignment.name)}`;
                 const config = {
                     headers: {
                         'x-auth-token': token

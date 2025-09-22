@@ -21,7 +21,7 @@ function AddCourseForm({ onCourseAdded }) {
         const submittingToast = toast.loading('Creating course...');
 
         try {
-            const url = 'http://localhost:3001/api/courses';
+            const url = `${import.meta.env.VITE_API_URL}/api/courses`;
 
             const courseData = {
                 name: courseName

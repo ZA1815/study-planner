@@ -13,7 +13,7 @@ function CalendarPage() {
     useEffect(() => {
         const fetchAllAssignments = async () => {
             try {
-                const url = 'http://localhost:3001/api/assignments/all';
+                const url = `${import.meta.env.VITE_API_URL}/api/assignments/all`;
                 const config = {
                     headers: {
                         'x-auth-token': token

@@ -21,7 +21,7 @@ function CourseItem({course, onDelete, onEdit}) {
     useEffect(() => {
         const fetchAssignments = async () => {
             try {
-                const url = `http://localhost:3001/api/courses/${course.id}/assignments`;
+                const url = `${import.meta.env.VITE_API_URL}/api/courses/${course.id}/assignments`;
                 const config = {
                     headers: {
                         'x-auth-token': token
@@ -58,7 +58,7 @@ function CourseItem({course, onDelete, onEdit}) {
                 setIsDeleting(true);
                 const deletingToast = toast.loading('Deleting assignment...');
 
-                const url = `http://localhost:3001/api/courses/${course.id}/assignments/${deleteID}`;
+                const url = `${import.meta.env.VITE_API_URL}/api/courses/${course.id}/assignments/${deleteID}`;
                 const config = {
                     headers: {
                         'x-auth-token': token
@@ -89,7 +89,7 @@ function CourseItem({course, onDelete, onEdit}) {
                 setIsSaving(true);
                 const savingToast = toast.loading('Saving course...');
 
-                const url = `http://localhost:3001/api/courses/${course.id}`
+                const url = `${import.meta.env.VITE_API_URL}/api/courses/${course.id}`
                 const config = {
                     headers: {
                         'x-auth-token': token

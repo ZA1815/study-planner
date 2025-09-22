@@ -15,7 +15,7 @@ function RegisterPage() {
         e.preventDefault();
         
         try {
-            const url = 'http://localhost:3001/api/users/sign-up';
+            const url = `${import.meta.env.VITE_API_URL}/api/users/sign-up`;
 
             const response = await axios.post(url, userInfo);
             
