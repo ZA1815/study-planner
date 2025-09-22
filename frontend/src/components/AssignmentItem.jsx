@@ -33,10 +33,9 @@ function AssignmentItem({course, assignment, onDelete, onEdit}) {
                         'x-auth-token': token
                     }
                 }
-                const formattedDate = moment(editData.dueDate).format('YYYY-MM-DDTHH:mm');
                 const payload = {
                     ...editData,
-                    dueDate: formattedDate || null
+                    dueDate: editData.dueDate ? moment(editData.dueDate).toISOString() : null
                 };
 
                 const response = await axios.put(url, payload, config);
