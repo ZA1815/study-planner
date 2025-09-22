@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import YouTubeSearch from "./YoutubeSearch";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 function AssignmentItem({course, assignment, onDelete, onEdit}) {
     const [isEditing, setIsEditing] = useState(false);
@@ -32,9 +33,10 @@ function AssignmentItem({course, assignment, onDelete, onEdit}) {
                         'x-auth-token': token
                     }
                 }
+                const formattedDate = moment(editData.dueDate).format('YYYY-MM-DDTHH:mm');
                 const payload = {
                     ...editData,
-                    dueDate: editData.dueDate || null
+                    dueDate: formattedDate || null
                 };
 
                 const response = await axios.put(url, payload, config);
@@ -77,7 +79,7 @@ function AssignmentItem({course, assignment, onDelete, onEdit}) {
     return (
         <div className="flex justify-between items-center p-4 border border-gray-200">
             {isEditing ? <input className="w-75 block border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="Edit here..." name="name" value={editData.name} onChange={onChangeFunc} required /> : <h3>{assignment.name}</h3>}
-            {isEditing ? <input className="w-75 block border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="datetime-local" name="dueDate" value={editData.dueDate} onChange={onChangeFunc} /> : assignment.due_date ? ` | Due on: ${new Date(assignment.due_date).toLocaleDateString()}` : ''}
+            {isEditing ? <input className="w-75 block border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" type="datetime-local" name="dueDate" value={editData.dueDate} onChange={onChangeFunc} /> : assignment.due_date ? ` | Due on: ${moment(assignment.due_date).format('MMMM Do, YYYY, h:mm a')}` : ''}
             <YouTubeSearch assignment={assignment} />
             <button className="mr-10 ml-10 py-2 px-4 rounded bg-emerald-300 hover:bg-emerald-600" onClick={onEditClick} disabled={isSaving}>{isEditing ? isSaving ? 'Saving...' : 'Save' : 'Edit'}</button>
             <button className="py-2 px-4 rounded bg-red-300 hover:bg-red-600" onClick={() => onDelete(assignment.id)}>Delete</button>
