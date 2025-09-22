@@ -11,7 +11,7 @@ CREATE TABLE users (
 -- Creates the courses table
 CREATE TABLE courses (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id),
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
@@ -20,7 +20,7 @@ CREATE TABLE courses (
 -- Creates the assignments table
 CREATE TABLE assignments (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    course_id INT NOT NULL REFERENCES courses(id),
+    course_id INT NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     due_date TIMESTAMP,
     created_at TIMESTAMP DEFAULT NOW(),
