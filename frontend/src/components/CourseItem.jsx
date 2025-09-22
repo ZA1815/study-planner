@@ -53,27 +53,29 @@ function CourseItem({course, onDelete, onEdit}) {
     }
 
     const onAssignmentDeletedFunc = async (deleteID) => {
-        try {
-            setIsDeleting(true);
-            const deletingToast = toast.loading('Deleting assignment...');
+        if (window.confirm('Are you sure you want to delete this assignment?')) {
+            try {
+                setIsDeleting(true);
+                const deletingToast = toast.loading('Deleting assignment...');
 
-            const url = `http://localhost:3001/api/courses/${course.id}/assignments/${deleteID}`;
-            const config = {
-                headers: {
-                    'x-auth-token': token
+                const url = `http://localhost:3001/api/courses/${course.id}/assignments/${deleteID}`;
+                const config = {
+                    headers: {
+                        'x-auth-token': token
+                    }
                 }
-            }
 
-            const response = await axios.delete(url, config);
-            toast.success('Successfully deleted assignment.', {id: deletingToast});
-            setAssignments(currentAssignments => currentAssignments.filter(assignment => assignment.id !== deleteID));
-        }
-        catch (err) {
-            setError(err.response ? err.response.data.msg : 'Unknown error');
-            toast.error('Error deleting assignment: ', {id: deletingToast});
-        }
-        finally {
-            setIsDeleting(false);
+                const response = await axios.delete(url, config);
+                toast.success('Successfully deleted assignment.', {id: deletingToast});
+                setAssignments(currentAssignments => currentAssignments.filter(assignment => assignment.id !== deleteID));
+            }
+            catch (err) {
+                setError(err.response ? err.response.data.msg : 'Unknown error');
+                toast.error('Error deleting assignment: ', {id: deletingToast});
+            }
+            finally {
+                setIsDeleting(false);
+            }
         }
     }
 

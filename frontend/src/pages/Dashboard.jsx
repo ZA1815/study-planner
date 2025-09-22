@@ -43,25 +43,27 @@ function Dashboard() {
     }
 
     const onCourseDeletedFunc = async (deleteID) => {
-        try {
-            setIsDeleting(true);
-            const deletingToast = toast.loading('Deleting course...');
+        if (window.confirm('Are you sure you want to delete this course and all its assignments?')) {
+            try {
+                setIsDeleting(true);
+                const deletingToast = toast.loading('Deleting course...');
 
-            const url = `http://localhost:3001/api/courses/${deleteID}`;
-            const config = {
-                headers: {
-                    'x-auth-token': token
+                const url = `http://localhost:3001/api/courses/${deleteID}`;
+                const config = {
+                    headers: {
+                        'x-auth-token': token
+                    }
                 }
+
+                const response = await axios.delete(url, config);
+
+                toast.success('Successfuly deleted course.', {id: deletingToast});
+                setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
             }
-
-            const response = await axios.delete(url, config);
-
-            toast.success('Successfuly deleted course.', {id: deletingToast});
-            setCourses(currentCourses => currentCourses.filter(course => course.id !== deleteID));
-        }
-        catch (err) {
-            setError(err.response ? err.response.data.msg : 'Unknown error');
-            toast.error('Error deleting course: ', {id: deletingToast});
+            catch (err) {
+                setError(err.response ? err.response.data.msg : 'Unknown error');
+                toast.error('Error deleting course: ', {id: deletingToast});
+            }
         }
     }
 
@@ -83,7 +85,7 @@ function Dashboard() {
                             <CourseItem key={course.id} course={course} onDelete={onCourseDeletedFunc} onEdit={onCourseEditedFunc}/>
                         ))
                     ) : (
-                        <p>You haven't added any courses yet.</p>
+                        <p className='text-xl'>You haven't added any courses yet. Why not add some now?</p>
                     )}
                 </>
             )}
