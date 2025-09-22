@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import YouTubeSearch from "./YoutubeSearch";
+import YouTubeSearch from "./YouTubeSearch";
 import toast from "react-hot-toast";
 import moment from "moment";
 
